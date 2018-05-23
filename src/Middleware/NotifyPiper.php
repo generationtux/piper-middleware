@@ -28,7 +28,7 @@ class NotifyPiper
                 RequestOptions::JSON => $this->buildRequestBody($req),
             ]);
         } catch (RequestException $e) {
-            app('log')->info('Request to piper timeout', [$e->getMessage()]);
+            app('log')->info($e->getMessage());
         } catch (Exception $e) {
             app('log')->info($e->getMessage());
         }
@@ -57,11 +57,12 @@ class NotifyPiper
             'destination' => ['name' => env('PIPER_NAME'), 'url' =>  $req->fullUrl()],
             'origin' => [],
         ]);
-        $referer = $req->headers->get('referer', null);
+        // @todo
+        // $referer = $req->headers->get('referer', null);
         return $this->setOriginBodyData(
             $body,
             null,
-            is_array($referer) ? $referer[0] : $referer
+            null // @todo
         )->toArray();
     }
 
