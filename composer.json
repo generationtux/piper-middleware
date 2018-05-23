@@ -3,6 +3,7 @@
     "description": "Laravel/Lumen middleware to notify Piper of incoming requests.",
     "type": "library",
     "minimum-stability": "stable",
+    "license": "Apache-2.0",
     "require": {
         "guzzlehttp/guzzle": "~6",
         "illuminate/http": "~5",
