@@ -2,6 +2,7 @@
     "name": "generationtux/piper-middleware",
     "description": "Laravel/Lumen middleware to notify Piper of incoming requests.",
     "type": "library",
+    "minimum-stability": "stable",
     "require": {
         "guzzlehttp/guzzle": "~6",
         "illuminate/http": "~5",
