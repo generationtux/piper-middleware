@@ -1,0 +1,21 @@
+{
+    "name": "generationtux/piper-middleware",
+    "description": "Laravel/Lumen middleware to notify Piper of incoming requests.",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "~6",
+        "illuminate/http": "~5",
+        "illuminate/support": "~5"
+    },
+    "autoload": {
+        "psr-4": {
+            "GenTux\\Piper\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "John Laswell",
+            "email": "johhn.n.laswell+github@gmail.com"
+        }
+    ]
+}
