@@ -15,6 +15,7 @@ class NotifyPiper
     {
         $resp = $next($req);
         if ($this->environmentIsExcluded(env('APP_ENV')) ||
+            $this->urlIsExcluded($req) ||
             is_null(env('PIPER_URL', null)) ||
             is_null(env('PIPER_NAME', null))
         ) {
@@ -45,16 +46,22 @@ class NotifyPiper
         }
     }
 
+    private function urlIsExcluded(Request $req)
+    {
+        return substr_count($req->fullUrl(), 'healthz') > 0;
+    }
+
     private function buildRequestBody(Request $req)
     {
         $body = collect([
             'destination' => ['name' => env('PIPER_NAME'), 'url' =>  $req->fullUrl()],
             'origin' => [],
         ]);
+        $referer = $req->headers->get('referer', null);
         return $this->setOriginBodyData(
             $body,
             null,
-            $req->headers->get('referer', null)
+            is_array($referer) ? $referer[0] : $referer
         )->toArray();
     }
 
