@@ -14,8 +14,7 @@ class NotifyPiper
     public function handle(Request $req, Closure $next)
     {
         $resp = $next($req);
-        if (
-            $this->environmentIsExcluded(env('APP_ENV')) ||
+        if ($this->environmentIsExcluded(env('APP_ENV')) ||
             is_null(env('PIPER_URL', null))
         ) {
             return $resp;
@@ -39,20 +38,22 @@ class NotifyPiper
         switch (strtolower($env)) {
             case 'production':
             case 'qa':
-            case 'local':
                 return false;
             default:
                 return true;
         }
     }
 
-    private function buildRequestBody(Request $req) {
+    private function buildRequestBody(Request $req)
+    {
         $body = collect([
             'destination' => ['name' => 'events', 'url' =>  $req->fullUrl()],
             'origin' => [],
         ]);
         return $this->setOriginBodyData(
-            $body, null, $req->headers->get('referer', null)
+            $body,
+            null,
+            $req->headers->get('referer', null)
         )->toArray();
     }
 

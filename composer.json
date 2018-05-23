@@ -18,5 +18,8 @@
             "name": "John Laswell",
             "email": "johhn.n.laswell+github@gmail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.2"
+    }
 }
