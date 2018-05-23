@@ -15,7 +15,8 @@ class NotifyPiper
     {
         $resp = $next($req);
         if ($this->environmentIsExcluded(env('APP_ENV')) ||
-            is_null(env('PIPER_URL', null))
+            is_null(env('PIPER_URL', null)) ||
+            is_null(env('PIPER_NAME', null))
         ) {
             return $resp;
         }
@@ -47,7 +48,7 @@ class NotifyPiper
     private function buildRequestBody(Request $req)
     {
         $body = collect([
-            'destination' => ['name' => 'events', 'url' =>  $req->fullUrl()],
+            'destination' => ['name' => env('PIPER_NAME'), 'url' =>  $req->fullUrl()],
             'origin' => [],
         ]);
         return $this->setOriginBodyData(
