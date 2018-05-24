@@ -53,16 +53,14 @@ class NotifyPiper
 
     private function buildRequestBody(Request $req)
     {
-        $body = collect([
-            'destination' => ['name' => env('PIPER_NAME'), 'url' =>  $req->fullUrl()],
-            'origin' => [],
-        ]);
-        // @todo
-        // $referer = $req->headers->get('referer', null);
+        $body = collect(['destination' => [
+            'name' => env('PIPER_NAME'),
+            'url' =>  $req->fullUrl(),
+        ]]);
         return $this->setOriginBodyData(
             $body,
             null,
-            null // @todo
+            $req->headers->get('referer', null)
         )->toArray();
     }
 
@@ -70,13 +68,15 @@ class NotifyPiper
     {
         if (is_null($name) && is_null($url)) {
             return $body;
+        } else {
+            $body['origin'] = [];
         }
         if (!is_null($name)) {
             $origin = $body['origin'];
             $origin['name'] = $name;
             $body['origin'] = $origin;
         }
-        if (!is_null($url)) {
+        if (!is_null($url) && is_string($url)) {
             $origin = $body['origin'];
             $origin['url'] = $url;
             $body['origin'] = $origin;
